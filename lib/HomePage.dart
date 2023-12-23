@@ -1,19 +1,26 @@
 import 'package:flame/components.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
+import 'package:pagoda_tgu/model/glass_of_Incense.dart';
 import 'package:pagoda_tgu/model/incense.dart';
+import 'package:pagoda_tgu/model/oil_lamp.dart';
+import 'package:pagoda_tgu/model/table.dart';
 
 
 
 class HomePage extends FlameGame{
+  
+  SpriteComponent background = new SpriteComponent();
+  SpriteAnimationComponent fireAnimation = SpriteAnimationComponent();
 
+  IncenseModel? incenseModel;
 
-  SpriteComponent background = SpriteComponent();
-  SpriteComponent table = SpriteComponent();
-  SpriteComponent glassOfIncense = SpriteComponent();
+  TableModel? tableModel;
 
+  GlassOfIncenseModel? glassOfIncenseModel;
 
-  Incense incense = new Incense(500,500);
+  OliLampModel? oliLampModel;
+
 
 
   @override
@@ -23,28 +30,43 @@ class HomePage extends FlameGame{
     final screenWidth = size[0];
     final screenHeight = size[1];
 
-    
-
-    add(background
+     add(background
       ..sprite = await loadSprite('Congchua.png')
       ..size = Vector2(screenWidth,screenHeight/2));
 
-    table
-      ..sprite = await loadSprite('caiban.png')
-      ..size = Vector2(screenWidth - 20, screenHeight/4)
-      ..y = background.height;
-    add(table);
+    incenseModel = IncenseModel(screenWidth, screenHeight);
 
-    glassOfIncense
-    ..sprite = await loadSprite('lyhuong.png')
-    ..size = Vector2(screenWidth/5, screenHeight/10)
-    ..x = screenWidth / 2 - screenWidth/10
-    ..y = table.position.y - screenHeight/18;
-    add(glassOfIncense);
+    tableModel = TableModel(screenWidth, screenHeight, background);
 
-    await add(incense);
+    glassOfIncenseModel = GlassOfIncenseModel(screenWidth, screenHeight, tableModel);
+
+    oliLampModel = OliLampModel(screenWidth, screenHeight, tableModel);
 
 
+    await add(tableModel!);
+
+    await add(oliLampModel!);
+
+    await add(glassOfIncenseModel!);
+
+    await add(incenseModel!);
+
+
+
+    var spriteSheet = await images.load('firesheet.png');
+    final spriteSize = Vector2(50, 100);
+    SpriteAnimationData spriteData = SpriteAnimationData.sequenced(
+      amount: 4, stepTime: 0.5, textureSize: Vector2(395,2000.0));
+
+
+
+    fireAnimation =
+    SpriteAnimationComponent.fromFrameData(spriteSheet, spriteData)
+    ..x = oliLampModel!.x 
+    ..y = oliLampModel!.y - spriteSize.y/1.3
+    ..size = spriteSize;
+
+    await add(fireAnimation);
     
 
   }
@@ -54,15 +76,16 @@ class HomePage extends FlameGame{
     // TODO: implement update
     super.update(dt);
 
-    print("incense");
-    print(incense.position.x);
-    print(incense.position.y);
-    print("glass of incense");
-    print(glassOfIncense.position.x);
-    print(glassOfIncense.position.y);
 
-    if(incense.x == glassOfIncense.x && incense.y == glassOfIncense.y)
-    print("Hello wrold");
+
+    if(glassOfIncenseModel!.x1! < incenseModel!.x2! && incenseModel!.x1! < glassOfIncenseModel!.x2!
+     && glassOfIncenseModel!.y1! < incenseModel!.y2! && incenseModel!.y1! < glassOfIncenseModel!.y2! ){
+
+      print("hello world");
+
+     }
+
+
 
   }
  

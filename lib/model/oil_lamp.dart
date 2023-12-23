@@ -1,6 +1,6 @@
 import 'package:flame/components.dart';
 
-class GlassOfIncenseModel extends SpriteComponent with HasGameRef{
+class OliLampModel extends SpriteComponent with HasGameRef{
 
   final double SCREEN_WIDTH;
   final double SCREEN_HEIGTH;
@@ -9,15 +9,14 @@ class GlassOfIncenseModel extends SpriteComponent with HasGameRef{
 
   late var width, height;
 
-
   double? x1,y1;
   double? x2,y2;
 
 
-  GlassOfIncenseModel(var this.SCREEN_WIDTH, var this.SCREEN_HEIGTH, var this.table){
+  OliLampModel(var this.SCREEN_WIDTH, var this.SCREEN_HEIGTH, var this.table){
     
-    this.width = SCREEN_WIDTH/5;
-    this.height = SCREEN_HEIGTH/10;
+    this.width = SCREEN_WIDTH/7;
+    this.height = SCREEN_HEIGTH/15;
 
   }
 
@@ -27,11 +26,11 @@ class GlassOfIncenseModel extends SpriteComponent with HasGameRef{
 
 
     this
-    ..sprite = await gameRef.loadSprite('lyhuong.png')
+    ..sprite = await gameRef.loadSprite('dendau.png')
     ..size = Vector2(width, height)
 
-    ..x = SCREEN_WIDTH / 2 - SCREEN_WIDTH/10
-    ..y = table.position.y - SCREEN_HEIGTH/18;
+    ..x = SCREEN_WIDTH / 3.2 - width
+    ..y = table.position.y - height + table.position.y / 14;
 
   }
 

@@ -1,9 +1,14 @@
 import 'package:flame/components.dart';
 
-class Table extends SpriteComponent with HasGameRef{
+class TableModel extends SpriteComponent with HasGameRef{
 
-  final double characterSize = 200;
 
+  var screenWidth;
+  var screenHeight;
+
+  var background;
+
+  TableModel(var this.screenWidth, var this.screenHeight,var this.background);
 
 
   @override
@@ -11,7 +16,11 @@ class Table extends SpriteComponent with HasGameRef{
     super.onLoad();
 
     sprite = await gameRef.loadSprite('caiban.png');
-    size = Vector2(characterSize + 100, characterSize);
+
+    this
+      ..sprite = await gameRef.loadSprite('caiban.png')
+      ..size = Vector2(screenWidth - 20, screenHeight/4)
+      ..y = background.height;
 
 
   }
