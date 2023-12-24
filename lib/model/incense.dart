@@ -2,109 +2,144 @@ import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flutter/material.dart';
 
-import 'dart:math';
 
 class IncenseModel extends SpriteComponent with DragCallbacks, HasGameRef {
+
   final double SCREEN_WIDTH;
-  final double SCREEN_HEIGHT;
+  final double SCREEN_HEIGTH;
 
-  late double width, height;
+  late var width, height;
 
-  bool status_fire = false;
-  bool status_rotate = false;
+  var status_fire = false;
 
-  double? x1, y1;
-  double? x2, y2;
+  var status_rotate = false;
+
+  double? x1,y1;
+  double? x2,y2;
 
   SpriteAnimationComponent fireAnimation = SpriteAnimationComponent();
-
-  IncenseModel(this.SCREEN_WIDTH, this.SCREEN_HEIGHT) {
-    this.width = SCREEN_WIDTH / 19;
-    this.height = SCREEN_HEIGHT / 7;
+  
+  IncenseModel(var this.SCREEN_WIDTH, var this.SCREEN_HEIGTH){
+    this.width = SCREEN_WIDTH/19;
+    this.height = SCREEN_HEIGTH/7;
   }
 
   @override
   Future<void> onLoad() async {
     super.onLoad();
 
+
     this
-      ..sprite = await gameRef.loadSprite('caynhan.png')
-      ..size = Vector2(width, height)
-      // set position in the center of the screen
-      ..x = SCREEN_WIDTH / 2
-      ..y = SCREEN_HEIGHT / 2;
+    ..sprite = await gameRef.loadSprite('caynhan.png')
+    ..size = Vector2(width, height)
+    //set posistion in center table
+    ..x = SCREEN_WIDTH/2
+    ..y = SCREEN_HEIGTH/2;
+
+
+
   }
 
-  double rotateX(double x, double y, double angle) {
-    return x * cos(angle) - y * sin(angle);
-  }
-
-  double rotateY(double x, double y, double angle) {
-    return x * sin(angle) + y * cos(angle);
-  }
 
   @override
   void update(double dt) {
+    // TODO: implement update
     super.update(dt);
 
-    double centerX = x + width / 2;
-    double centerY = y + height / 2;
+    // update x1,y1 x2,y2
 
-    // Tính toán x1, y1 theo angle
-    x1 = rotateX(centerX - width / 2, centerY - height / 2, angle);
-    y1 = rotateY(centerX - width / 2, centerY - height / 2, angle);
+    x1 = this.position.x;
+    y1 = this.position.y;
+    x2 = this.position.x + width;
+    y2 = this.position.y + height;
 
-    if (status_rotate) {
-      if (angle > -20 * dt) angle -= 2 * dt;
-    } else {
-      if (angle <= 0) angle += 2 * dt;
+
+
+    if(status_rotate)
+    {
+      if(this.angle > -20*dt)
+      this.angle -=  2 * dt ;
     }
+    else{
+      if(this.angle <= 0)
+      this.angle += 2*dt;
+      
+    }
+
 
     print("location X: $x");
     print("location Y: $y");
 
-    print("location X1: $x1");
-    print("location Y1: $y1");
+
+
   }
+ 
 
   @override
   void onDragStart(DragStartEvent event) {
+    // TODO: implement onDragStart
+    
     print("click in");
+
     status_rotate = true;
+
+
   }
 
   @override
   void onDragEnd(DragEndEvent event) {
+
     print("click out");
+
     status_rotate = false;
+
   }
 
-  @override
+   @override
   void onDragUpdate(DragUpdateEvent event) {
-    x += event.localDelta.x;
-    y += event.localDelta.y;
 
-    if (x < 0) x = 0;
-    if (y < 0) y = 0;
-    if (x + width > SCREEN_WIDTH) x = SCREEN_WIDTH - width;
-    if (y + height > SCREEN_HEIGHT) y = SCREEN_HEIGHT - height;
+   x += event.localDelta.x;
+   y += event.localDelta.y;
+
+    print("event X" + event.localDelta.x.toString());
+    print("event Y" + event.localDelta.y.toString());
+
+
+
+
+    
+
+
+
+
+  // Đảm bảo đối tượng ở trong giới hạn màn hình
+  if (x < 0) x = 0;
+  if (y < 0) y = 0;
+  if (x + width > SCREEN_WIDTH) x = SCREEN_WIDTH - width;
+  if (y + height > SCREEN_HEIGTH) y = SCREEN_HEIGTH - height;
   }
 
-  @override
+   @override
   void render(Canvas canvas) {
     super.render(canvas);
-    renderDebug(canvas);
+
+    // Vẽ hình ảnh hoặc sprite bình thường ở đây
+
+    renderDebug(canvas); // Gọi hàm renderDebug để vẽ khung va chạm
   }
+
 
   @override
   void renderDebug(Canvas canvas) {
-    Rect hitbox = Rect.fromLTWH(0, 0, width, height);
+    Rect hitbox = Rect.fromLTWH(0, 0, SCREEN_WIDTH/18, SCREEN_HEIGTH/5);
 
     final paint = Paint()
-      ..color = Colors.red
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 2.0;
+      ..color = Colors.red // Màu sắc của khung va chạm
+      ..style = PaintingStyle.stroke // Chế độ vẽ khung
+      ..strokeWidth = 2.0; // Độ dày của đường viền
 
     canvas.drawRect(hitbox, paint);
   }
+
+
 }
