@@ -55,20 +55,7 @@ class IncenseModel extends SpriteComponent with DragCallbacks, HasGameRef {
 
 
 
-    if(status_rotate)
-    {
-      if(this.angle > -20*dt)
-      this.angle -=  2 * dt ;
-    }
-    else{
-      if(this.angle <= 0)
-      this.angle += 2*dt;
-      
-    }
 
-
-    print("location X: $x");
-    print("location Y: $y");
 
 
 
@@ -125,7 +112,7 @@ class IncenseModel extends SpriteComponent with DragCallbacks, HasGameRef {
 
     // Vẽ hình ảnh hoặc sprite bình thường ở đây
 
-    renderDebug(canvas); // Gọi hàm renderDebug để vẽ khung va chạm
+    //renderDebug(canvas); // Gọi hàm renderDebug để vẽ khung va chạm
   }
 
 
