@@ -33,8 +33,8 @@ class IncenseModel extends SpriteComponent with DragCallbacks, HasGameRef {
     ..sprite = await gameRef.loadSprite('caynhan.png')
     ..size = Vector2(width, height)
     //set posistion in center table
-    ..x = SCREEN_WIDTH/2
-    ..y = SCREEN_HEIGTH/2;
+    ..x = SCREEN_WIDTH/4
+    ..y = SCREEN_HEIGTH - height - 25;
 
 
 
@@ -66,7 +66,6 @@ class IncenseModel extends SpriteComponent with DragCallbacks, HasGameRef {
   void onDragStart(DragStartEvent event) {
     // TODO: implement onDragStart
     
-    print("click in");
 
     status_rotate = true;
 
@@ -76,7 +75,6 @@ class IncenseModel extends SpriteComponent with DragCallbacks, HasGameRef {
   @override
   void onDragEnd(DragEndEvent event) {
 
-    print("click out");
 
     status_rotate = false;
 
@@ -88,8 +86,6 @@ class IncenseModel extends SpriteComponent with DragCallbacks, HasGameRef {
    x += event.localDelta.x;
    y += event.localDelta.y;
 
-    print("event X" + event.localDelta.x.toString());
-    print("event Y" + event.localDelta.y.toString());
 
 
 

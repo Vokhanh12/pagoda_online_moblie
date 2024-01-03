@@ -18,11 +18,15 @@ class ChickenOfferingsModel extends SpriteComponent with DragCallbacks, HasGameR
   double? x2,y2;
 
   SpriteAnimationComponent fireAnimation = SpriteAnimationComponent();
+
+  
   
   ChickenOfferingsModel(var this.SCREEN_WIDTH, var this.SCREEN_HEIGTH){
-    this.width = SCREEN_WIDTH/2;
-    this.height = SCREEN_HEIGTH/3;
+    this.width = SCREEN_WIDTH/3;
+    this.height = SCREEN_HEIGTH/5;
   }
+
+  
 
   @override
   Future<void> onLoad() async {
@@ -30,11 +34,11 @@ class ChickenOfferingsModel extends SpriteComponent with DragCallbacks, HasGameR
 
 
     this
-    ..sprite = await gameRef.loadSprite('ga.png')
+    ..sprite = await gameRef.loadSprite('mamcung.png')
     ..size = Vector2(width, height)
     //set posistion in center table
     ..x = SCREEN_WIDTH/2
-    ..y = SCREEN_HEIGTH/2;
+    ..y = SCREEN_HEIGTH - height - 25;
 
 
 
@@ -61,7 +65,6 @@ class ChickenOfferingsModel extends SpriteComponent with DragCallbacks, HasGameR
   void onDragStart(DragStartEvent event) {
     // TODO: implement onDragStart
     
-    print("click in");
 
     status_rotate = true;
 
@@ -71,7 +74,6 @@ class ChickenOfferingsModel extends SpriteComponent with DragCallbacks, HasGameR
   @override
   void onDragEnd(DragEndEvent event) {
 
-    print("click out");
 
     status_rotate = false;
 
